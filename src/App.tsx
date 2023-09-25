@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
@@ -9,9 +8,13 @@ function App() {
     setCount(count * 2);
   };
 
+  useEffect(() => {
+    console.log("useEffectが実行されました");
+  },[count]);
+
   return (
     <div className="App">
-      <h1>useContext</h1>
+      <h1>useContext・useEffect</h1>
       <p>2の乗数を増やす</p>
       <p>{count}</p>
       <button onClick={handleSquare}>＋</button>
