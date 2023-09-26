@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import './App.css';
 import ContextA from './components/ContextSample/ContextA';
 
@@ -32,6 +32,20 @@ function App() {
     console.log(ref.current?.value);
   };
 
+  const [count01, setCount01] = useState(0);
+  const [count02, setCount02] = useState(0);
+
+  const result01 = () => setCount01(count01 + 1);
+  const result02 = () => setCount02(count02 + 1);
+
+  const square = useMemo(() => {
+    let i = 0;
+    while (i < 200000000) {
+      i++;
+    }
+    return count01 * count01 * count01;
+  }, [count01]);
+
   useEffect(() => {
     console.log("useEffectが実行されました");
   },[count]);
@@ -62,6 +76,14 @@ function App() {
       <button onClick={() => dispatch({type: "increment"})}>＋</button>
       <button onClick={() => dispatch({type: "decrement"})}>ー</button>
       <button onClick={() => dispatch({type: "reset"})}>Reset</button>
+
+      <hr />
+      <h1>useMemo</h1>
+      <div>result01: {count01}</div>
+      <div>result02: {count02}</div>
+      <div>結果：{square}</div>
+      <button onClick={result01}>increment01</button>
+      <button onClick={result02}>increment02</button>
     </div>
   );
 }
