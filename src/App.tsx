@@ -1,11 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import './App.css';
 import ContextA from './components/ContextSample/ContextA';
+
+const initialState = 0;
+
+const reducer = (state: number, action: { type: any; }) => {
+  switch(action.type) {
+    case "increment":
+      return state + 1;
+    case "decrement":
+      return state - 1;
+    case "reset":
+      return initialState;
+    default:
+      return state;
+  }
+};
 
 function App() {
 
   const [count, setCount] = useState(1);
   const ref = useRef<HTMLInputElement>(null);
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleSquare = () => {
     setCount(count * 2);
@@ -38,6 +55,13 @@ function App() {
         ref={ref}
       />
       <button onClick={handleRef}>Try useRef</button>
+
+      <hr />
+      <h1>useReducer</h1>
+      <p>カウント：{state}</p>
+      <button onClick={() => dispatch({type: "increment"})}>＋</button>
+      <button onClick={() => dispatch({type: "decrement"})}>ー</button>
+      <button onClick={() => dispatch({type: "reset"})}>Reset</button>
     </div>
   );
 }
