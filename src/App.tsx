@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import ContextA from './components/ContextSample/ContextA';
 
 function App() {
 
   const [count, setCount] = useState(1);
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleSquare = () => {
     setCount(count * 2);
+  };
+
+  const handleRef = () => {
+    console.log(ref.current?.value);
   };
 
   useEffect(() => {
@@ -25,6 +30,14 @@ function App() {
         <h1>useContext</h1>
         <ContextA />
       </div>
+      <hr />
+      <h1>useRef</h1>
+      <input
+        type="text"
+        onChange={(e) => e.target.value}
+        ref={ref}
+      />
+      <button onClick={handleRef}>Try useRef</button>
     </div>
   );
 }
